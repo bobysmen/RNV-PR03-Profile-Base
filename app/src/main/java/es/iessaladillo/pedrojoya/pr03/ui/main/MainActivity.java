@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -22,7 +20,6 @@ import androidx.core.app.ActivityCompat;
 import es.iessaladillo.pedrojoya.pr03.R;
 import es.iessaladillo.pedrojoya.pr03.data.local.Database;
 import es.iessaladillo.pedrojoya.pr03.data.local.model.Avatar;
-import es.iessaladillo.pedrojoya.pr03.utils.ValidationUtils;
 
 import static es.iessaladillo.pedrojoya.pr03.data.local.Database.getInstance;
 import static es.iessaladillo.pedrojoya.pr03.utils.ValidationUtils.isValidEmail;
@@ -55,22 +52,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setupView();
 
+        //OnFocusListener
         txtName.setOnFocusChangeListener((v, hasFocus) -> setLblBold(lblName, hasFocus));
         txtPhoneNumber.setOnFocusChangeListener((v, hasFocus) -> setLblBold(lblPhoneNumber, hasFocus));
         txtEmail.setOnFocusChangeListener((v, hasFocus) -> setLblBold(lblEmail, hasFocus));
         txtAddress.setOnFocusChangeListener((v, hasFocus) -> setLblBold(lblAddress, hasFocus));
         txtWeb.setOnFocusChangeListener((v, hasFocus) -> setLblBold(lblWeb, hasFocus));
+        //OnClickListener
         imgAvatar.setOnClickListener(v -> {
             avatar=getInstance().getRandomAvatar();
             imgAvatar.setImageResource(avatar.getImageResId());
+            imgAvatar.setTag(avatar.getImageResId());
             lblAvatar.setText(avatar.getName());
         });
         lblAvatar.setOnClickListener(v -> {
             avatar=getInstance().getRandomAvatar();
             imgAvatar.setImageResource(avatar.getImageResId());
+            imgAvatar.setTag(avatar.getImageResId());
             lblAvatar.setText(avatar.getName());
         });
-
+        //OnEditorActionListener IME
         txtWeb.setOnEditorActionListener((v, actionId, event) -> {
             if(actionId==EditorInfo.IME_ACTION_DONE){
                 save();
@@ -82,8 +83,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
-
-
+        //TextChangedListener
         txtName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -97,12 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(TextUtils.isEmpty(txtName.getText())){
-                    txtName.setError(getString(R.string.msg_error));
-                    lblName.setEnabled(false);
-                }else{
-                   lblName.setEnabled(true);
-                }
+                checkName();
             }
         });
 
@@ -119,14 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!isValidEmail(String.valueOf(txtEmail.getText()))){
-                    txtEmail.setError(getString(R.string.msg_error));
-                    lblEmail.setEnabled(false);
-                    imgEmail.setEnabled(false);
-                }else{
-                    lblEmail.setEnabled(true);
-                    imgEmail.setEnabled(true);
-                }
+                checkEmail();
             }
         });
 
@@ -143,14 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!isValidPhone(String.valueOf(txtPhoneNumber.getText()))){
-                    txtPhoneNumber.setError(getString(R.string.msg_error));
-                    lblPhoneNumber.setEnabled(false);
-                    imgPhoneNumber.setEnabled(false);
-                }else{
-                    lblPhoneNumber.setEnabled(true);
-                    imgPhoneNumber.setEnabled(true);
-                }
+                checkPhoneNumber();
             }
         });
 
@@ -167,14 +148,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(TextUtils.isEmpty(txtAddress.getText())){
-                    txtAddress.setError(getString(R.string.msg_error));
-                    lblAddress.setEnabled(false);
-                    imgAddress.setEnabled(false);
-                }else{
-                    lblAddress.setEnabled(true);
-                    imgAddress.setEnabled(true);
-                }
+                checkAddress();
             }
         });
 
@@ -191,23 +165,82 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!isValidUrl(String.valueOf(txtWeb.getText()))){
-                    txtWeb.setError(getString(R.string.msg_error));
-                    lblWeb.setEnabled(false);
-                    imgWeb.setEnabled(false);
-                }else{
-                    lblWeb.setEnabled(true);
-                    imgWeb.setEnabled(true);
-                }
+                checkWeb();
             }
         });
     }
 
+
+    //Function for Validate
+    private boolean checkName() {
+        if(TextUtils.isEmpty(txtName.getText())){
+            txtName.setError(getString(R.string.main_invalid_data));
+            lblName.setEnabled(false);
+            return false;
+        }else{
+            lblName.setEnabled(true);
+            return true;
+        }
+    }
+
+    private boolean checkEmail() {
+        if(!isValidEmail(String.valueOf(txtEmail.getText()))){
+            txtEmail.setError(getString(R.string.main_invalid_data));
+            lblEmail.setEnabled(false);
+            imgEmail.setEnabled(false);
+            return false;
+        }else{
+            lblEmail.setEnabled(true);
+            imgEmail.setEnabled(true);
+            return true;
+        }
+    }
+
+    private boolean checkPhoneNumber() {
+        if(!isValidPhone(String.valueOf(txtPhoneNumber.getText()))){
+            txtPhoneNumber.setError(getString(R.string.main_invalid_data));
+            lblPhoneNumber.setEnabled(false);
+            imgPhoneNumber.setEnabled(false);
+            return false;
+        }else{
+            lblPhoneNumber.setEnabled(true);
+            imgPhoneNumber.setEnabled(true);
+            return true;
+        }
+    }
+
+    private boolean checkAddress() {
+        if(TextUtils.isEmpty(txtAddress.getText())){
+            txtAddress.setError(getString(R.string.main_invalid_data));
+            lblAddress.setEnabled(false);
+            imgAddress.setEnabled(false);
+            return false;
+        }else{
+            lblAddress.setEnabled(true);
+            imgAddress.setEnabled(true);
+            return true;
+        }
+    }
+
+    private boolean checkWeb() {
+        if(!isValidUrl(String.valueOf(txtWeb.getText()))){
+            txtWeb.setError(getString(R.string.main_invalid_data));
+            lblWeb.setEnabled(false);
+            imgWeb.setEnabled(false);
+            return false;
+        }else{
+            lblWeb.setEnabled(true);
+            imgWeb.setEnabled(true);
+            return true;
+        }
+    }
+
+    //Function Label Bold
     private void setLblBold(TextView lbl, boolean hasFocus){
         if(hasFocus){
-            lbl.setTypeface(null,Typeface.BOLD);
+            lbl.setTypeface(Typeface.DEFAULT,Typeface.BOLD);
         }else{
-            lbl.setTypeface(null, Typeface.NORMAL);
+            lbl.setTypeface(Typeface.DEFAULT, Typeface.NORMAL);
         }
     }
 
@@ -230,6 +263,7 @@ public class MainActivity extends AppCompatActivity {
         imgWeb=ActivityCompat.requireViewById(this, R.id.imgWeb);
         //Set default Avatar
         imgAvatar.setImageResource(Database.getInstance().getDefaultAvatar().getImageResId());
+        imgAvatar.setTag(Database.getInstance().getDefaultAvatar().getImageResId());
         lblAvatar.setText(Database.getInstance().getDefaultAvatar().getName());
 
     }
@@ -255,7 +289,18 @@ public class MainActivity extends AppCompatActivity {
      * Checks if form is valid or not and shows a Snackbar accordingly
      **/
     private void save() {
-        Snackbar.make(lblName,"Student saved succesfully", Snackbar.LENGTH_LONG).show();
+        boolean isCheckName, isCheckEmail, isCheckPhoneNumber, isCheckAddress, isCheckWeb;
+        isCheckName=checkName();
+        isCheckEmail=checkEmail();
+        isCheckPhoneNumber=checkPhoneNumber();
+        isCheckAddress=checkAddress();
+        isCheckWeb=checkWeb();
+        if(isCheckName && isCheckEmail && isCheckPhoneNumber && isCheckAddress && isCheckWeb){
+            Snackbar.make(lblName,R.string.main_saved_succesfully, Snackbar.LENGTH_LONG).show();
+        }else{
+            Snackbar.make(lblName, R.string.main_error_saving, Snackbar.LENGTH_LONG).show();
+        }
+
     }
 
 }

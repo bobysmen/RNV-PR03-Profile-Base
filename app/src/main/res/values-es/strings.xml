@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Perfil</string>
+    <string name="main_invalid_data">Dato no valido</string>
+    <string name="main_save">Guardar</string>
+    <string name="main_saved_succesfully">Estudiante guardado satisfactoriamente</string>
+    <string name="main_error_saving">Error al guardar estudiante</string>
+    <string name="text_lblAvatar">TextView</string>
+    <string name="text_name">Nombre</string>
+    <string name="text_email">email</string>
+    <string name="text_phonenumber">Nº Telefono</string>
+    <string name="text_address">Direccion</string>
+    <string name="text_web">Web</string>
+    <string name="hint_txtName">(nombre)</string>
+    <string name="hint_txtPhonenumber">(teléfono)</string>
+    <string name="hint_txtEmail">(email)</string>
+    <string name="hint_txtAddress">(dirección)</string>
+    <string name="hint_txtWeb">(url)</string>
+    <string name="description_imgAvatar">Imagen avatar</string>
+    <string name="description_imgPhonenumber">Imagen icono telefono</string>
+    <string name="description_imgEmail">Imagen icono email</string>
+    <string name="description_imgAddress">Imagen icono direccion</string>
+    <string name="description_imgWeb">Imagen icono web</string>
+</resources>

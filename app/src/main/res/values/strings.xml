@@ -16,6 +16,10 @@
     <string name="hint_txtEmail">(email)</string>
     <string name="hint_txtAddress">(address)</string>
     <string name="hint_txtWeb">(url)</string>
-    <string name="msg_error">Invalid data</string>
+    <string name="description_imgAvatar">Image avatar</string>
+    <string name="description_imgPhonenumber">Image icon Phonenumber</string>
+    <string name="description_imgEmail">Image icon email</string>
+    <string name="description_imgAddress">Image icon address</string>
+    <string name="description_imgWeb">Image icon web</string>
     <!-- END DO NOT TOUCH -->
 </resources>
