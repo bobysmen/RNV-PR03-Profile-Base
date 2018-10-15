@@ -5,5 +5,17 @@
     <string name="main_save">Save</string>
     <string name="main_saved_succesfully">Student saved successfully</string>
     <string name="main_error_saving">Error saving student</string>
+    <string name="text_lblAvatar">TextView</string>
+    <string name="text_name">Name</string>
+    <string name="text_email">email</string>
+    <string name="text_phonenumber">Phone Number</string>
+    <string name="text_address">Address</string>
+    <string name="text_web">Web</string>
+    <string name="hint_txtName">(name)</string>
+    <string name="hint_txtPhonenumber">(phone)</string>
+    <string name="hint_txtEmail">(email)</string>
+    <string name="hint_txtAddress">(address)</string>
+    <string name="hint_txtWeb">(url)</string>
+    <string name="msg_error">Invalid data</string>
     <!-- END DO NOT TOUCH -->
 </resources>

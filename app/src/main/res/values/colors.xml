@@ -7,5 +7,6 @@
     <color name="colorBlack">#000000</color>
     <color name="colorError">#FF0000</color>
     <color name="white">#FFFFFF</color>
+    <color name="color_lblAvatar">#7FBDBDBD</color>
     <!-- END DO NOT TOUCH -->
 </resources>
