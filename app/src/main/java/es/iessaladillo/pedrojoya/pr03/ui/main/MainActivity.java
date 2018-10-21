@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setupView();
+        setupViews();
 
         //OnFocusListener
         txtName.setOnFocusChangeListener((v, hasFocus) -> setLblBold(lblName, hasFocus));
@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         txtWeb.setOnFocusChangeListener((v, hasFocus) -> setLblBold(lblWeb, hasFocus));
         //OnClickListener
         imgAvatar.setOnClickListener(v -> {
+            // REPITES ESTO MISMO ABAJO. CREA UN MÉTODO
             avatar=getInstance().getRandomAvatar();
             imgAvatar.setImageResource(avatar.getImageResId());
             imgAvatar.setTag(avatar.getImageResId());
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         txtWeb.setOnEditorActionListener((v, actionId, event) -> {
             if(actionId==EditorInfo.IME_ACTION_DONE){
                 save();
+                // TENÍAS UN MÉTODO DE UTILIDAD PARA ESTO EN LA CLASE KeyboardUtils.
                 InputMethodManager imm =
                         (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
@@ -172,6 +174,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     //Function for Validate
+    // TIENES VARIOS MÉTODOS PRÁCTICAMENTE IGUALES, PODRÍAS CREAR UN MÉTODO QUE RECIBIERA
+    // EL EditText, EL TextView Y UN BOOLEANO INDICANDO SI ES VÁLIDO.
     private boolean checkName() {
         if(TextUtils.isEmpty(txtName.getText())){
             txtName.setError(getString(R.string.main_invalid_data));
@@ -244,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setupView() {
+    private void setupViews() {
         imgAvatar=ActivityCompat.requireViewById(this, R.id.imgAvatar);
         lblAvatar=ActivityCompat.requireViewById(this, R.id.lblAvatar);
         lblName=ActivityCompat.requireViewById(this,R.id.lblName);
@@ -262,6 +266,7 @@ public class MainActivity extends AppCompatActivity {
         txtWeb=ActivityCompat.requireViewById(this, R.id.txtWeb);
         imgWeb=ActivityCompat.requireViewById(this, R.id.imgWeb);
         //Set default Avatar
+        // ¿POR QUÉ NO OBTIENES UNA ÚNICA VEZ EL default avatar?
         imgAvatar.setImageResource(Database.getInstance().getDefaultAvatar().getImageResId());
         imgAvatar.setTag(Database.getInstance().getDefaultAvatar().getImageResId());
         lblAvatar.setText(Database.getInstance().getDefaultAvatar().getName());
@@ -290,11 +295,14 @@ public class MainActivity extends AppCompatActivity {
      **/
     private void save() {
         boolean isCheckName, isCheckEmail, isCheckPhoneNumber, isCheckAddress, isCheckWeb;
+        // CREA UN MÉTODO checkAll() O ALGO ASÍ
         isCheckName=checkName();
         isCheckEmail=checkEmail();
         isCheckPhoneNumber=checkPhoneNumber();
         isCheckAddress=checkAddress();
         isCheckWeb=checkWeb();
+        // CREA UN MÉTODO isFormValid() O ALGO ASÍ. Y SI EN EL FUTURO HAY QUE COMPROBAR
+        // MÁS COSAS?
         if(isCheckName && isCheckEmail && isCheckPhoneNumber && isCheckAddress && isCheckWeb){
             Snackbar.make(lblName,R.string.main_saved_succesfully, Snackbar.LENGTH_LONG).show();
         }else{

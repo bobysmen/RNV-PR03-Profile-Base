@@ -6,12 +6,16 @@
     android:layout_height="match_parent"
     android:id="@+id/clRoot">
 
+    <!-- ELIMINA LOS COMENTARIOS TODO CUANDO LO HAYAS IMPLEMENTADO -->
 
     <!-- TODO
     Use android:tint="@color/color_state_selector" in ImageViews corresponding to Icons
     Use android:textColor="@color/color_state_selector" in TextViews acting as labels.
     -->
 
+    <!-- EN ESTE CASO NO DEBERÍAS ESTABLECER UN ANCHO FIJA PARA LA IMAGEN PORQUE
+         QUIERES QUE OCUPE EL ANCHO DE PANTALLA COMPLETO. LA ALTURA TAMBIÉN SE
+         PUEDE CALCULAR AUTOMÁTICAMENTE GRACIAS AL RATIO -->
     <ImageView
         android:id="@+id/imgAvatar"
         android:layout_width="@dimen/width_imgAvatar"
@@ -59,7 +63,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lblName"
         android:hint="@string/hint_txtName"
-        android:inputType="text" />
+        android:inputType="text">
+        <requestFocus/>
+    </EditText>
 
     <TextView
         android:id="@+id/lblEmail"
